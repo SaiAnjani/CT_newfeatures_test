@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySpace Trip Planning - Cleartrip</title>
+    <meta name="description" content="MySpace Trip Planning - AI-powered travel planning with chatbot assistance">
+    <link rel="icon" sizes="72x72" href="images/cleartrip-72x72.png">
+    <link rel="icon" sizes="96x96" href="images/cleartrip-96x96.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #F7FAFF;
+            border-bottom: 1px solid #E6E6E6;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            color: #FF4F17;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .flipkart-text {
+            color: #1A1A1A;
+            opacity: 0.5;
+            font-size: 12px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1A1A1A;
+            text-decoration: none;
+        }
+
+        .nav-tab:hover {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab.active {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-tab.myspace {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .nav-tab.myspace:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .genai-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        .planning-header {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .planning-title {
+            font-size: 30px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .planning-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .planning-container {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        /* Left Content Area */
+        .left-content {
+            flex: 1;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            min-height: 600px;
+        }
+
+        .content-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .content-tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .content-tab.active {
+            background: #36c;
+            color: white;
+        }
+
+        .content-tab:hover:not(.active) {
+            background: #f8f9fa;
+            color: #36c;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #E6E6E6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .card-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FF4F17;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #1A1A1A;
+            font-weight: 500;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #FF4F17;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: #e64515;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 1px solid #E6E6E6;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            color: #1A1A1A;
+        }
+
+        /* Right Chatbot Area */
+        .right-chatbot {
+            width: 400px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chatbot-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #E6E6E6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .chatbot-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .chatbot-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message.user .message-avatar {
+            background: #36c;
+            color: white;
+        }
+
+        .message.bot .message-avatar {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .message-content {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 280px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.user .message-content {
+            background: #36c;
+            color: white;
+        }
+
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #E6E6E6;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #E6E6E6;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input-field:focus {
+            border-color: #36c;
+            box-shadow: 0 0 0 2px rgba(54, 102, 204, 0.1);
+        }
+
+        .send-btn {
+            background: #36c;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .send-btn:hover {
+            background: #2a5aa0;
+        }
+
+        /* Hovering MySpace Navigation */
+        .myspace-nav-hover {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid #E6E6E6;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .myspace-nav-hover:hover {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hover-trigger {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .hover-trigger:hover + .myspace-nav-hover {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hover-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .hover-nav-item:hover {
+            background: #f8f9fa;
+            color: #36c;
+        }
+
+        .hover-nav-item.active {
+            background: #36c;
+            color: white;
+        }
+
+        .hover-nav-item svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .planning-container {
+                flex-direction: column;
+            }
+
+            .right-chatbot {
+                width: 100%;
+            }
+
+            .myspace-nav-hover {
+                display: none;
+            }
+
+            .hover-trigger {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">cleartrip</div>
+            <div class="flipkart-text">A Flipkart Company</div>
+        </div>
+        
+        <nav class="nav-tabs">
+            <a href="index-with-myspace.html" class="nav-tab">
+                <img src="images/Navbar_Flights.png" alt="Flights">
+                Flights
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Hotels.png" alt="Hotels">
+                Hotels
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Buses.png" alt="Buses">
+                Buses
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Trains.png" alt="Trains">
+                Trains
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Packages.png" alt="Packages">
+                Packages
+            </a>
+            <a href="dashboard.html" class="nav-tab myspace">
+                <div class="genai-icon">AI</div>
+                MySpace
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hovering MySpace Navigation -->
+    <div class="hover-trigger">AI</div>
+    <div class="myspace-nav-hover">
+        <a href="dashboard.html" class="hover-nav-item">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            Dashboard
+        </a>
+        <a href="wishlist.html" class="hover-nav-item">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            Wishlist
+        </a>
+        <a href="trip-planning.html" class="hover-nav-item active">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            Trip Planning
+        </a>
+        <a href="#" class="hover-nav-item">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+            Itinerary
+        </a>
+        <a href="#" class="hover-nav-item">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            </svg>
+            Booking
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Planning Header -->
+        <section class="planning-header">
+            <h1 class="planning-title">AI Trip Planning</h1>
+            <p class="planning-subtitle">Chat with our AI assistant to plan your perfect trip</p>
+        </section>
+
+        <!-- Planning Container -->
+        <div class="planning-container">
+            <!-- Left Content Area -->
+            <div class="left-content">
+                <div class="content-tabs">
+                    <button class="content-tab active" data-tab="flights">Flights</button>
+                    <button class="content-tab" data-tab="hotels">Hotels</button>
+                    <button class="content-tab" data-tab="packages">Packages</button>
+                </div>
+
+                <!-- Flights Tab -->
+                <div id="flights" class="tab-content active">
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="card-header">
+                                <div class="card-title">Mumbai → Goa</div>
+                                <div class="card-price">₹4,500</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Airline</div>
+                                    <div class="detail-value">IndiGo</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Duration</div>
+                                    <div class="detail-value">1h 15m</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Departure</div>
+                                    <div class="detail-value">08:30 AM</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Arrival</div>
+                                    <div class="detail-value">09:45 AM</div>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-primary">Book Now</button>
+                                <button class="btn-secondary">View Details</button>
+                            </div>
+                        </div>
+
+                        <div class="result-card">
+                            <div class="card-header">
+                                <div class="card-title">Delhi → Mumbai</div>
+                                <div class="card-price">₹6,200</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Airline</div>
+                                    <div class="detail-value">Air India</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Duration</div>
+                                    <div class="detail-value">2h 10m</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Departure</div>
+                                    <div class="detail-value">10:15 AM</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Arrival</div>
+                                    <div class="detail-value">12:25 PM</div>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-primary">Book Now</button>
+                                <button class="btn-secondary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hotels Tab -->
+                <div id="hotels" class="tab-content">
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="card-header">
+                                <div class="card-title">Taj Mahal Palace, Mumbai</div>
+                                <div class="card-price">₹12,500/night</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Rating</div>
+                                    <div class="detail-value">⭐⭐⭐⭐⭐</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">Colaba, Mumbai</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Room Type</div>
+                                    <div class="detail-value">Deluxe Ocean View</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Amenities</div>
+                                    <div class="detail-value">WiFi, Pool, Spa</div>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-primary">Book Now</button>
+                                <button class="btn-secondary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Packages Tab -->
+                <div id="packages" class="tab-content">
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="card-header">
+                                <div class="card-title">Goa Beach Paradise</div>
+                                <div class="card-price">₹25,000</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Duration</div>
+                                    <div class="detail-value">5 Days / 4 Nights</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Includes</div>
+                                    <div class="detail-value">Flight + Hotel + Meals</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Activities</div>
+                                    <div class="detail-value">Beach Tours, Water Sports</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Hotel</div>
+                                    <div class="detail-value">Taj Holiday Village</div>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-primary">Book Now</button>
+                                <button class="btn-secondary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Chatbot Area -->
+            <div class="right-chatbot">
+                <div class="chatbot-header">
+                    <div class="chatbot-title">AI Travel Assistant</div>
+                    <div class="chatbot-subtitle">Ask me anything about your trip!</div>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">
+                        <div class="message-avatar">AI</div>
+                        <div class="message-content">
+                            Hi! I'm your AI travel assistant. I can help you find flights, hotels, and travel packages. What kind of trip are you planning?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <div class="input-group">
+                        <input type="text" class="chat-input-field" id="chat-input" placeholder="Type your message..." maxlength="200">
+                        <button class="send-btn" id="send-btn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.content-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Chatbot functionality
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = isUser ? 'U' : 'AI';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = content;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleUserMessage(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Simulate AI response based on user input
+            let response = "I understand you're interested in travel. Let me help you find the best options!";
+            
+            if (lowerMessage.includes('flight') || lowerMessage.includes('fly') || lowerMessage.includes('airplane')) {
+                response = "Great! I've found some excellent flight options for you. Check out the Flights tab for the best deals.";
+                // Switch to flights tab
+                document.querySelector('[data-tab="flights"]').click();
+            } else if (lowerMessage.includes('hotel') || lowerMessage.includes('stay') || lowerMessage.includes('accommodation')) {
+                response = "Perfect! I've curated some amazing hotel options for you. Check out the Hotels tab for luxury stays.";
+                // Switch to hotels tab
+                document.querySelector('[data-tab="hotels"]').click();
+            } else if (lowerMessage.includes('package') || lowerMessage.includes('tour') || lowerMessage.includes('vacation')) {
+                response = "Excellent choice! I've found some incredible travel packages for you. Check out the Packages tab for complete vacation deals.";
+                // Switch to packages tab
+                document.querySelector('[data-tab="packages"]').click();
+            } else if (lowerMessage.includes('goa') || lowerMessage.includes('beach')) {
+                response = "Goa is a fantastic choice! I've found flights, hotels, and packages for Goa. Check out all the tabs for the best options.";
+            } else if (lowerMessage.includes('kerala') || lowerMessage.includes('backwater')) {
+                response = "Kerala's backwaters are magical! I've found some great options for your Kerala trip. Check out the packages tab for houseboat experiences.";
+                document.querySelector('[data-tab="packages"]').click();
+            } else if (lowerMessage.includes('rajasthan') || lowerMessage.includes('heritage')) {
+                response = "Rajasthan is perfect for heritage tourism! I've found flights and packages for Jaipur, Udaipur, and Jodhpur. Check out the packages tab.";
+                document.querySelector('[data-tab="packages"]').click();
+            }
+            
+            // Add AI response after a short delay
+            setTimeout(() => {
+                addMessage(response, false);
+            }, 1000);
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                handleUserMessage(message);
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Add click handlers for navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (this.classList.contains('myspace')) {
+                    // Navigate to Dashboard
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+                
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+
+        // Add hover effects for result cards
+        document.querySelectorAll('.result-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleartrip: #1 Site for Booking Flights Tickets & Hotels Online - Get Best Travel Deals</title>
+    <meta name="description" content="Flight Booking & Hotel Booking made easy✔️Get amazing deals on International & Domestic Flight Tickets & choose from 5 lac+ Hotels. Get last minute hot deals.">
+    <link rel="canonical" href="https://www.cleartrip.com">
+    <link rel="icon" sizes="72x72" href="images/cleartrip-72x72.png">
+    <link rel="icon" sizes="96x96" href="images/cleartrip-96x96.png">
+    
+    <!-- Original CSS files -->
+    <link rel="stylesheet" href="css/29a17b0372843c45.css">
+    <link rel="stylesheet" href="css/5b2b1888b147c9c3.css">
+    <link rel="stylesheet" href="css/ae5dea7cc86eaaeb.css">
+    
+    <!-- MySpace Tab Styles -->
+    <style>
+        .myspace-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 8px;
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .myspace-tab:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .genai-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Load the original index.html content -->
+    <script>
+        // Load the original index.html content
+        fetch('index.html')
+            .then(response => response.text())
+            .then(html => {
+                // Create a temporary div to parse the HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                
+                // Find the navigation container
+                const navContainer = tempDiv.querySelector('.gAtpCm');
+                
+                if (navContainer) {
+                    // Create MySpace tab
+                    const myspaceTab = document.createElement('div');
+                    myspaceTab.className = 'sc-gmgFlS';
+                    myspaceTab.innerHTML = `
+                        <div display="flex" cursor="pointer" height="64px" class="sc-gmgFlS cCghMI" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 8px 16px; margin-left: 8px;">
+                            <div class="sc-gmgFlS jCHCQM">
+                                <div class="sc-gmgFlS">
+                                    <div style="width: 20px; height: 20px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: white; margin-right: 8px;">AI</div>
+                                    <p color="#FFFFFF" cursor="pointer" text-decoration="none" font-size="14px" font-style="none" font-weight="600" class="sc-kMkxaj hALOkO" style="color: white;">MySpace</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add click event
+                    myspaceTab.addEventListener('click', function() {
+                        window.location.href = 'myspace.html';
+                    });
+                    
+                    // Add hover effect
+                    myspaceTab.addEventListener('mouseenter', function() {
+                        this.querySelector('.cCghMI').style.background = 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)';
+                    });
+                    
+                    myspaceTab.addEventListener('mouseleave', function() {
+                        this.querySelector('.cCghMI').style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    });
+                    
+                    // Insert the MySpace tab
+                    navContainer.appendChild(myspaceTab);
+                }
+                
+                // Replace the body content
+                document.body.innerHTML = tempDiv.body.innerHTML;
+                
+                // Re-execute any scripts
+                const scripts = tempDiv.querySelectorAll('script');
+                scripts.forEach(script => {
+                    if (script.src) {
+                        const newScript = document.createElement('script');
+                        newScript.src = script.src;
+                        document.head.appendChild(newScript);
+                    } else {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = script.textContent;
+                        document.head.appendChild(newScript);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading index.html:', error);
+                // Fallback: redirect to the working version
+                window.location.href = 'index-with-myspace.html';
+            });
+    </script>
+    
+    <!-- Fallback content -->
+    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>Loading Cleartrip with MySpace...</h1>
+        <p>If this page doesn't load properly, please use <a href="index-with-myspace.html">this link</a> instead.</p>
+    </div>
+</body>
+</html> 

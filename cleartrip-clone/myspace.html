@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySpace - Cleartrip</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #F7FAFF;
+            border-bottom: 1px solid #E6E6E6;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            color: #FF4F17;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .flipkart-text {
+            color: #1A1A1A;
+            opacity: 0.5;
+            font-size: 12px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1A1A1A;
+            text-decoration: none;
+        }
+
+        .nav-tab:hover {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab.active {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-tab.myspace {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .nav-tab.myspace:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .genai-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 64px);
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 20%;
+            background: white;
+            border-right: 1px solid #E6E6E6;
+            padding: 24px 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .sidebar-item:hover {
+            background-color: #f8f9fa;
+            color: #36c;
+        }
+
+        .sidebar-item.active {
+            background-color: #eff5fc;
+            color: #36c;
+            border-right: 3px solid #36c;
+        }
+
+        .sidebar-item svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Main Dashboard */
+        .dashboard {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            margin-bottom: 32px;
+        }
+
+        .dashboard-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E6E6E6;
+        }
+
+        .card-header { 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .card-content {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #36c;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Wishlist Specific Styles */
+        .wishlist-section {
+            display: none;
+        }
+
+        .wishlist-section.active {
+            display: block;
+        }
+
+        .add-wishlist-form {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E6E6E6;
+        }
+
+        .form-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            border: 1px solid #E6E6E6;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #36c;
+            box-shadow: 0 0 0 2px rgba(54, 102, 204, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #36c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: #2a5aa0;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .wishlist-tile {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E6E6E6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .wishlist-tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .tile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .tile-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+        }
+
+        .tile-destination {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
+        }
+
+        .tile-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #1A1A1A;
+            font-weight: 500;
+        }
+
+        .tile-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #E6E6E6;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            color: #1A1A1A;
+        }
+
+        .empty-wishlist {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-wishlist svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Dashboard Specific Styles */
+        .booking-item, .planning-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .booking-item:last-child, .planning-item:last-child {
+            border-bottom: none;
+        }
+
+        .booking-header, .planning-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .booking-header h4, .planning-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin: 0;
+        }
+
+        .booking-status, .planning-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .booking-status.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .planning-status.in-progress {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .planning-status.draft {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b28a, #00d4a3);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .quick-actions .btn-secondary {
+            width: 100%;
+            text-align: center;
+            padding: 10px 12px;
+            font-size: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #E6E6E6;
+            }
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .dashboard {
+                padding: 16px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">cleartrip</div>
+            <div class="flipkart-text">A Flipkart Company</div>
+        </div>
+        
+        <nav class="nav-tabs">
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Flights.png" alt="Flights">
+                Flights
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Hotels.png" alt="Hotels">
+                Hotels
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Buses.png" alt="Buses">
+                Buses
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Trains.png" alt="Trains">
+                Trains
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Packages.png" alt="Packages">
+                Packages
+            </a>
+            <a href="myspace.html" class="nav-tab myspace active">
+                <div class="genai-icon">AI</div>
+                MySpace
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="sidebar-item active" data-section="dashboard">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#wishlist" class="sidebar-item" data-section="wishlist">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    Wishlist
+                </a>
+                <a href="#trip-planning" class="sidebar-item" data-section="trip-planning">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                    </svg>
+                    Trip Planning
+                </a>
+                <a href="#itinerary" class="sidebar-item" data-section="itinerary">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    Itinerary
+                </a>
+                <a href="#booking" class="sidebar-item" data-section="booking">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    Booking
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="dashboard-section active">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Welcome to MySpace</h1>
+                    <p class="dashboard-subtitle">Your personalized travel dashboard powered by AI</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Total Trips</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="wishlist-count">0</div>
+                        <div class="stat-label">Wishlist Items</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">₹45,000</div>
+                        <div class="stat-label">Total Spent</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.8</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Cards -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Bookings</h3>
+                            <div class="card-icon" style="background: #36c;">📅</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="booking-item">
+                                <div class="booking-header">
+                                    <h4>Mumbai Flight Booking</h4>
+                                    <span class="booking-status confirmed">Confirmed</span>
+                                </div>
+                                <p><strong>Date:</strong> August 25th, 2024</p>
+                                <p><strong>Flight:</strong> AI-101 | Mumbai → Delhi</p>
+                                <p><strong>Passengers:</strong> 2 Adults</p>
+                                <p style="margin-top: 12px; color: #36c; font-weight: 500;">View Details →</p>
+                            </div>
+                            <div class="booking-item">
+                                <div class="booking-header">
+                                    <h4>Goa Hotel Booking</h4>
+                                    <span class="booking-status confirmed">Confirmed</span>
+                                </div>
+                                <p><strong>Check-in:</strong> September 15th, 2024</p>
+                                <p><strong>Hotel:</strong> Taj Holiday Village Resort</p>
+                                <p><strong>Duration:</strong> 3 Nights</p>
+                                <p style="margin-top: 12px; color: #36c; font-weight: 500;">View Details →</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Trip Planning</h3>
+                            <div class="card-icon" style="background: #00b28a;">🗺️</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="planning-item">
+                                <div class="planning-header">
+                                    <h4>Europe Summer Trip</h4>
+                                    <span class="planning-status in-progress">In Progress</span>
+                                </div>
+                                <p><strong>Destination:</strong> Paris, Rome, Barcelona</p>
+                                <p><strong>Duration:</strong> 14 Days</p>
+                                <p><strong>Progress:</strong> 60% Complete</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                                <p style="margin-top: 12px; color: #00b28a; font-weight: 500;">Continue Planning →</p>
+                            </div>
+                            <div class="planning-item">
+                                <div class="planning-header">
+                                    <h4>Kerala Backwaters</h4>
+                                    <span class="planning-status draft">Draft</span>
+                                </div>
+                                <p><strong>Destination:</strong> Alleppey, Kerala</p>
+                                <p><strong>Duration:</strong> 5 Days</p>
+                                <p><strong>Progress:</strong> 25% Complete</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25%"></div>
+                                </div>
+                                <p style="margin-top: 12px; color: #00b28a; font-weight: 500;">Continue Planning →</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">AI Recommendations</h3>
+                            <div class="card-icon" style="background: #667eea;">🤖</div>
+                        </div>
+                        <div class="card-content">
+                            <p>Based on your travel history, we recommend exploring Goa for your next trip.</p>
+                            <p style="margin-top: 12px; color: #667eea; font-weight: 500;">See Recommendations →</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Quick Actions</h3>
+                            <div class="card-icon" style="background: #ff6b6b;">⚡</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="quick-actions">
+                                <button class="btn-secondary">Book New Flight</button>
+                                <button class="btn-secondary">Search Hotels</button>
+                                <button class="btn-secondary">Plan Trip</button>
+                                <button class="btn-secondary">View Offers</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wishlist Section -->
+            <div id="wishlist-section" class="wishlist-section">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">My Wishlist</h1>
+                    <p class="dashboard-subtitle">Save your dream destinations and travel plans</p>
+                </div>
+
+                <!-- Add Wishlist Form -->
+                <div class="add-wishlist-form">
+                    <h3 class="form-title">Add New Wishlist Item</h3>
+                    <form id="wishlist-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Trip Name *</label>
+                                <input type="text" class="form-input" id="trip-name" placeholder="e.g., Summer Beach Vacation" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Destination *</label>
+                                <input type="text" class="form-input" id="destination" placeholder="e.g., Bali, Indonesia" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Preferred Start Date</label>
+                                <input type="date" class="form-input" id="start-date">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Preferred End Date</label>
+                                <input type="date" class="form-input" id="end-date">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Duration (Days)</label>
+                                <input type="number" class="form-input" id="duration" placeholder="7" min="1" max="365">
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Number of Adults</label>
+                                <input type="number" class="form-input" id="adults" placeholder="2" min="1" max="10">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Number of Kids</label>
+                                <input type="number" class="form-input" id="kids" placeholder="0" min="0" max="10">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Budget Range</label>
+                                <select class="form-input" id="budget">
+                                    <option value="">Select Budget</option>
+                                    <option value="Under ₹50,000">Under ₹50,000</option>
+                                    <option value="₹50,000 - ₹1,00,000">₹50,000 - ₹1,00,000</option>
+                                    <option value="₹1,00,000 - ₹2,00,000">₹1,00,000 - ₹2,00,000</option>
+                                    <option value="₹2,00,000 - ₹5,00,000">₹2,00,000 - ₹5,00,000</option>
+                                    <option value="Above ₹5,00,000">Above ₹5,00,000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Notes</label>
+                            <textarea class="form-input" id="notes" rows="3" placeholder="Any special requirements, preferred activities, or other details..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Add to Wishlist</button>
+                    </form>
+                </div>
+
+                <!-- Wishlist Items -->
+                <div id="wishlist-items">
+                    <!-- Wishlist tiles will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Other sections can be added here -->
+            <div id="trip-planning-section" class="wishlist-section">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Trip Planning</h1>
+                    <p class="dashboard-subtitle">Plan your next adventure</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <p>Trip planning functionality coming soon...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="itinerary-section" class="wishlist-section">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Itinerary</h1>
+                    <p class="dashboard-subtitle">Your travel schedules</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <p>Itinerary functionality coming soon...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="booking-section" class="wishlist-section">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Booking</h1>
+                    <p class="dashboard-subtitle">Your booking history</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <p>Booking history functionality coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Wishlist functionality
+        let wishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+
+        // Update wishlist count
+        function updateWishlistCount() {
+            const count = wishlistItems.length;
+            document.getElementById('wishlist-count').textContent = count;
+        }
+
+        // Render wishlist items
+        function renderWishlistItems() {
+            const container = document.getElementById('wishlist-items');
+            
+            if (wishlistItems.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-wishlist">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        <h3>Your wishlist is empty</h3>
+                        <p>Start adding your dream destinations to your wishlist!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="wishlist-grid">
+                    ${wishlistItems.map((item, index) => `
+                        <div class="wishlist-tile">
+                            <div class="tile-header">
+                                <div>
+                                    <div class="tile-title">${item.tripName}</div>
+                                    <div class="tile-destination">${item.destination}</div>
+                                </div>
+                                <button class="delete-btn" onclick="deleteWishlistItem(${index})">Delete</button>
+                            </div>
+                            <div class="tile-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Duration</div>
+                                    <div class="detail-value">${item.duration || 'Not specified'} days</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Travelers</div>
+                                    <div class="detail-value">${item.adults || 0} adults, ${item.kids || 0} kids</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Budget</div>
+                                    <div class="detail-value">${item.budget || 'Not specified'}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Dates</div>
+                                    <div class="detail-value">${item.startDate ? `${item.startDate} to ${item.endDate || 'TBD'}` : 'Flexible'}</div>
+                                </div>
+                            </div>
+                            ${item.notes ? `
+                                <div class="detail-item" style="grid-column: 1 / -1;">
+                                    <div class="detail-label">Notes</div>
+                                    <div class="detail-value">${item.notes}</div>
+                                </div>
+                            ` : ''}
+                            <div class="tile-actions">
+                                <button class="btn-secondary">View Prices</button>
+                                <button class="btn-secondary">Plan Trip</button>
+                                <button class="btn-secondary">Share</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Add new wishlist item
+        function addWishlistItem(item) {
+            wishlistItems.push(item);
+            localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+            updateWishlistCount();
+            renderWishlistItems();
+        }
+
+        // Delete wishlist item
+        function deleteWishlistItem(index) {
+            if (confirm('Are you sure you want to delete this wishlist item?')) {
+                wishlistItems.splice(index, 1);
+                localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+                updateWishlistCount();
+                renderWishlistItems();
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('wishlist-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const item = {
+                tripName: document.getElementById('trip-name').value,
+                destination: document.getElementById('destination').value,
+                startDate: document.getElementById('start-date').value,
+                endDate: document.getElementById('end-date').value,
+                duration: document.getElementById('duration').value,
+                adults: document.getElementById('adults').value,
+                kids: document.getElementById('kids').value,
+                budget: document.getElementById('budget').value,
+                notes: document.getElementById('notes').value,
+                createdAt: new Date().toISOString()
+            };
+
+            addWishlistItem(item);
+            e.target.reset();
+            
+            // Show success message
+            alert('Wishlist item added successfully!');
+        });
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Hide all sections
+                document.querySelectorAll('.wishlist-section, .dashboard-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected section
+                const sectionId = this.getAttribute('data-section') + '-section';
+                const selectedSection = document.getElementById(sectionId);
+                if (selectedSection) {
+                    selectedSection.classList.add('active');
+                }
+            });
+        });
+
+        // Add hover effects for dashboard cards
+        document.querySelectorAll('.dashboard-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            });
+        });
+
+        // Initialize
+        updateWishlistCount();
+        renderWishlistItems();
+    </script>
+</body>
+</html> 

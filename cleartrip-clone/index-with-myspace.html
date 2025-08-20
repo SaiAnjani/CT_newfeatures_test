@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleartrip: #1 Site for Booking Flights Tickets & Hotels Online - Get Best Travel Deals</title>
+    <meta name="description" content="Flight Booking & Hotel Booking made easy✔️Get amazing deals on International & Domestic Flight Tickets & choose from 5 lac+ Hotels. Get last minute hot deals.">
+    <link rel="canonical" href="https://www.cleartrip.com">
+    <link rel="icon" sizes="72x72" href="images/cleartrip-72x72.png">
+    <link rel="icon" sizes="96x96" href="images/cleartrip-96x96.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #F7FAFF;
+            border-bottom: 1px solid #E6E6E6;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            color: #FF4F17;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .flipkart-text {
+            color: #1A1A1A;
+            opacity: 0.5;
+            font-size: 12px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1A1A1A;
+            text-decoration: none;
+        }
+
+        .nav-tab:hover {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab.active {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-tab.myspace {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .nav-tab.myspace:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .genai-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        .search-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-title {
+            font-size: 30px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .search-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .search-form {
+            background: #f7f7f7;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #E6E6E6;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #36c;
+            box-shadow: 0 0 0 2px rgba(54, 102, 204, 0.1);
+        }
+
+        .search-button {
+            background: #FF4F17;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-button:hover {
+            background: #e64515;
+        }
+
+        .offers-section {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .offer-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E6E6E6;
+        }
+
+        .offer-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .offer-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E6E6E6;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            color: #36c;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                gap: 12px;
+            }
+
+            .nav-tab {
+                padding: 6px 8px;
+                font-size: 14px;
+            }
+
+            .offers-section {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">cleartrip</div>
+            <div class="flipkart-text">A Flipkart Company</div>
+        </div>
+        
+        <nav class="nav-tabs">
+            <a href="#" class="nav-tab active">
+                <img src="images/Navbar_Flights.png" alt="Flights">
+                Flights
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Hotels.png" alt="Hotels">
+                Hotels
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Buses.png" alt="Buses">
+                Buses
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Trains.png" alt="Trains">
+                Trains
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Packages.png" alt="Packages">
+                Packages
+            </a>
+            <a href="dashboard.html" class="nav-tab myspace">
+                <div class="genai-icon">AI</div>
+                MySpace
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Search Section -->
+        <section class="search-section">
+            <h1 class="search-title">Search flights</h1>
+            <p class="search-subtitle">Enjoy hassle free flight ticket bookings at lowest airfare</p>
+            
+            <div class="search-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">From</label>
+                        <input type="text" class="form-input" placeholder="Enter departure city">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">To</label>
+                        <input type="text" class="form-input" placeholder="Enter destination city">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Departure Date</label>
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Return Date</label>
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Passengers</label>
+                        <select class="form-input">
+                            <option>1 Adult</option>
+                            <option>2 Adults</option>
+                            <option>3 Adults</option>
+                            <option>4 Adults</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="search-button">Search Flights</button>
+            </div>
+        </section>
+
+        <!-- Offers Section -->
+        <section class="offers-section">
+            <div class="offers-grid">
+                <div class="offer-card">
+                    <h3 class="offer-title">HDFC Bank Offer</h3>
+                    <p class="offer-description">Up to ₹5,000 off on flights with select HDFC Bank Credit Cards</p>
+                </div>
+                
+                <div class="offer-card">
+                    <h3 class="offer-title">IndiGo Getaway Sale</h3>
+                    <p class="offer-description">Domestic fares from ₹1,508 & International fares from ₹4,608</p>
+                </div>
+                
+                <div class="offer-card">
+                    <h3 class="offer-title">Student Discount</h3>
+                    <p class="offer-description">Special fares for students with valid ID cards</p>
+                </div>
+                
+                <div class="offer-card">
+                    <h3 class="offer-title">Senior Citizen Fare</h3>
+                    <p class="offer-description">Discounted rates for senior citizens above 60 years</p>
+                </div>
+            </div>
+            
+            <aside class="sidebar">
+                <h3 class="sidebar-title">Quick Links</h3>
+                <a href="#" class="sidebar-item">My Bookings</a>
+                <a href="#" class="sidebar-item">Customer Support</a>
+                <a href="#" class="sidebar-item">Travel Insurance</a>
+                <a href="#" class="sidebar-item">Flight Status</a>
+                <a href="dashboard.html" class="sidebar-item">MySpace Dashboard</a>
+            </aside>
+        </section>
+    </main>
+
+    <script>
+        // Add click handlers for navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (this.classList.contains('myspace')) {
+                    // Navigate to MySpace Dashboard page
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+                
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+
+        // Add hover effects for offer cards
+        document.querySelectorAll('.offer-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script>
+</body>
+</html> 

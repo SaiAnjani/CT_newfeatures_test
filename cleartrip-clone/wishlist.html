@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySpace Wishlist - Cleartrip</title>
+    <meta name="description" content="MySpace Wishlist - Save your dream destinations and travel plans">
+    <link rel="icon" sizes="72x72" href="images/cleartrip-72x72.png">
+    <link rel="icon" sizes="96x96" href="images/cleartrip-96x96.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #F7FAFF;
+            border-bottom: 1px solid #E6E6E6;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            color: #FF4F17;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .flipkart-text {
+            color: #1A1A1A;
+            opacity: 0.5;
+            font-size: 12px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1A1A1A;
+            text-decoration: none;
+        }
+
+        .nav-tab:hover {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab.active {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-tab.myspace {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .nav-tab.myspace:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .genai-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .wishlist-section {
+            flex: 1;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .wishlist-title {
+            font-size: 30px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .wishlist-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .add-wishlist-form {
+            background: #f7f7f7;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid #E6E6E6;
+        }
+
+        .form-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            border: 1px solid #E6E6E6;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #36c;
+            box-shadow: 0 0 0 2px rgba(54, 102, 204, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #FF4F17;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: #e64515;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .wishlist-tile {
+            background: #f7f7f7;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #E6E6E6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .wishlist-tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .tile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .tile-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+        }
+
+        .tile-destination {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
+        }
+
+        .tile-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #1A1A1A;
+            font-weight: 500;
+        }
+
+        .tile-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 1px solid #E6E6E6;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            color: #1A1A1A;
+        }
+
+        .empty-wishlist {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-wishlist svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar-nav {
+            width: 280px;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E6E6E6;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .sidebar-item:hover {
+            background: #f8f9fa;
+            color: #36c;
+            transform: translateX(4px);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, #36c 0%, #2a5aa0 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(54, 102, 204, 0.3);
+        }
+
+        .sidebar-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-item svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                gap: 12px;
+            }
+
+            .nav-tab {
+                padding: 6px 8px;
+                font-size: 14px;
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">cleartrip</div>
+            <div class="flipkart-text">A Flipkart Company</div>
+        </div>
+        
+        <nav class="nav-tabs">
+            <a href="index-with-myspace.html" class="nav-tab">
+                <img src="images/Navbar_Flights.png" alt="Flights">
+                Flights
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Hotels.png" alt="Hotels">
+                Hotels
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Buses.png" alt="Buses">
+                Buses
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Trains.png" alt="Trains">
+                Trains
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Packages.png" alt="Packages">
+                Packages
+            </a>
+            <a href="dashboard.html" class="nav-tab myspace">
+                <div class="genai-icon">AI</div>
+                MySpace
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar-nav">
+                <h3 class="sidebar-title">MySpace Navigation</h3>
+                <a href="dashboard.html" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="wishlist.html" class="sidebar-item active">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    Wishlist
+                </a>
+                <a href="trip-planning.html" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Trip Planning
+                </a>
+                <a href="#" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                    </svg>
+                    Itinerary
+                </a>
+                <a href="#" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    Booking
+                </a>
+            </aside>
+
+            <!-- Wishlist Section -->
+            <section class="wishlist-section">
+                <h1 class="wishlist-title">My Wishlist</h1>
+                <p class="wishlist-subtitle">Save your dream destinations and travel plans</p>
+
+                <!-- Add Wishlist Form -->
+                <div class="add-wishlist-form">
+                    <h3 class="form-title">Add New Wishlist Item</h3>
+                    <form id="wishlist-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Trip Name *</label>
+                                <input type="text" class="form-input" id="trip-name" placeholder="e.g., Summer Beach Vacation" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Destination *</label>
+                                <input type="text" class="form-input" id="destination" placeholder="e.g., Bali, Indonesia" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Preferred Start Date</label>
+                                <input type="date" class="form-input" id="start-date">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Preferred End Date</label>
+                                <input type="date" class="form-input" id="end-date">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Duration (Days)</label>
+                                <input type="number" class="form-input" id="duration" placeholder="7" min="1" max="365">
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Number of Adults</label>
+                                <input type="number" class="form-input" id="adults" placeholder="2" min="1" max="10">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Number of Kids</label>
+                                <input type="number" class="form-input" id="kids" placeholder="0" min="0" max="10">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Budget Range</label>
+                                <select class="form-input" id="budget">
+                                    <option value="">Select Budget</option>
+                                    <option value="Under ₹50,000">Under ₹50,000</option>
+                                    <option value="₹50,000 - ₹1,00,000">₹50,000 - ₹1,00,000</option>
+                                    <option value="₹1,00,000 - ₹2,00,000">₹1,00,000 - ₹2,00,000</option>
+                                    <option value="₹2,00,000 - ₹5,00,000">₹2,00,000 - ₹5,00,000</option>
+                                    <option value="Above ₹5,00,000">Above ₹5,00,000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Notes</label>
+                            <textarea class="form-input" id="notes" rows="3" placeholder="Any special requirements, preferred activities, or other details..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Add to Wishlist</button>
+                    </form>
+                </div>
+
+                <!-- Wishlist Items -->
+                <div id="wishlist-items">
+                    <!-- Wishlist tiles will be dynamically added here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Wishlist functionality
+        let wishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+
+        // Render wishlist items
+        function renderWishlistItems() {
+            const container = document.getElementById('wishlist-items');
+            
+            if (wishlistItems.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-wishlist">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        <h3>Your wishlist is empty</h3>
+                        <p>Start adding your dream destinations to your wishlist!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="wishlist-grid">
+                    ${wishlistItems.map((item, index) => `
+                        <div class="wishlist-tile">
+                            <div class="tile-header">
+                                <div>
+                                    <div class="tile-title">${item.tripName}</div>
+                                    <div class="tile-destination">${item.destination}</div>
+                                </div>
+                                <button class="delete-btn" onclick="deleteWishlistItem(${index})">Delete</button>
+                            </div>
+                            <div class="tile-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Duration</div>
+                                    <div class="detail-value">${item.duration || 'Not specified'} days</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Travelers</div>
+                                    <div class="detail-value">${item.adults || 0} adults, ${item.kids || 0} kids</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Budget</div>
+                                    <div class="detail-value">${item.budget || 'Not specified'}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Dates</div>
+                                    <div class="detail-value">${item.startDate ? `${item.startDate} to ${item.endDate || 'TBD'}` : 'Flexible'}</div>
+                                </div>
+                            </div>
+                            ${item.notes ? `
+                                <div class="detail-item" style="grid-column: 1 / -1;">
+                                    <div class="detail-label">Notes</div>
+                                    <div class="detail-value">${item.notes}</div>
+                                </div>
+                            ` : ''}
+                            <div class="tile-actions">
+                                <button class="btn-secondary">View Prices</button>
+                                <button class="btn-secondary">Plan Trip</button>
+                                <button class="btn-secondary">Share</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Add new wishlist item
+        function addWishlistItem(item) {
+            wishlistItems.push(item);
+            localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+            renderWishlistItems();
+        }
+
+        // Delete wishlist item
+        function deleteWishlistItem(index) {
+            if (confirm('Are you sure you want to delete this wishlist item?')) {
+                wishlistItems.splice(index, 1);
+                localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+                renderWishlistItems();
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('wishlist-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const item = {
+                tripName: document.getElementById('trip-name').value,
+                destination: document.getElementById('destination').value,
+                startDate: document.getElementById('start-date').value,
+                endDate: document.getElementById('end-date').value,
+                duration: document.getElementById('duration').value,
+                adults: document.getElementById('adults').value,
+                kids: document.getElementById('kids').value,
+                budget: document.getElementById('budget').value,
+                notes: document.getElementById('notes').value,
+                createdAt: new Date().toISOString()
+            };
+
+            addWishlistItem(item);
+            e.target.reset();
+            
+            // Show success message
+            alert('Wishlist item added successfully!');
+        });
+
+        // Add click handlers for navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (this.classList.contains('myspace')) {
+                    // Navigate to Dashboard
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+                
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+
+        // Add hover effects for wishlist tiles
+        document.querySelectorAll('.wishlist-tile').forEach(tile => {
+            tile.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+            });
+            
+            tile.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            });
+        });
+
+        // Initialize
+        renderWishlistItems();
+    </script>
+</body>
+</html>

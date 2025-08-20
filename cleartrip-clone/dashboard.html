@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySpace Dashboard - Cleartrip</title>
+    <meta name="description" content="MySpace Dashboard - Your travel overview and insights">
+    <link rel="icon" sizes="72x72" href="images/cleartrip-72x72.png">
+    <link rel="icon" sizes="96x96" href="images/cleartrip-96x96.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #F7FAFF;
+            border-bottom: 1px solid #E6E6E6;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            color: #FF4F17;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .flipkart-text {
+            color: #1A1A1A;
+            opacity: 0.5;
+            font-size: 12px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1A1A1A;
+            text-decoration: none;
+        }
+
+        .nav-tab:hover {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab.active {
+            background-color: #eff5fc;
+            color: #36c;
+        }
+
+        .nav-tab img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-tab.myspace {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .nav-tab.myspace:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .genai-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .dashboard-section {
+            flex: 1;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .dashboard-title {
+            font-size: 30px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 24px;
+            background: #f7f7f7;
+            border-radius: 12px;
+            border: 1px solid #E6E6E6;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #36c;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .dashboard-card {
+            background: #f7f7f7;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #E6E6E6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .card-content {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .booking-item, .planning-item, .past-trip-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .booking-item:last-child, .planning-item:last-child, .past-trip-item:last-child {
+            border-bottom: none;
+        }
+
+        .booking-header, .planning-header, .past-trip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .booking-header h4, .planning-header h4, .past-trip-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin: 0;
+        }
+
+        .booking-status, .planning-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .booking-status.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .booking-status.completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .planning-status.in-progress {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .planning-status.draft {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b28a, #00d4a3);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 1px solid #E6E6E6;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            color: #1A1A1A;
+        }
+
+        .trip-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #ffc107;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar-nav {
+            width: 280px;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E6E6E6;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .sidebar-item:hover {
+            background: #f8f9fa;
+            color: #36c;
+            transform: translateX(4px);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, #36c 0%, #2a5aa0 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(54, 102, 204, 0.3);
+        }
+
+        .sidebar-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-item svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                gap: 12px;
+            }
+
+            .nav-tab {
+                padding: 6px 8px;
+                font-size: 14px;
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">cleartrip</div>
+            <div class="flipkart-text">A Flipkart Company</div>
+        </div>
+        
+        <nav class="nav-tabs">
+            <a href="index-with-myspace.html" class="nav-tab">
+                <img src="images/Navbar_Flights.png" alt="Flights">
+                Flights
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Hotels.png" alt="Hotels">
+                Hotels
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Buses.png" alt="Buses">
+                Buses
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Trains.png" alt="Trains">
+                Trains
+            </a>
+            <a href="#" class="nav-tab">
+                <img src="images/Navbar_Packages.png" alt="Packages">
+                Packages
+            </a>
+            <a href="dashboard.html" class="nav-tab myspace active">
+                <div class="genai-icon">AI</div>
+                MySpace
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar-nav">
+                <h3 class="sidebar-title">MySpace Navigation</h3>
+                <a href="dashboard.html" class="sidebar-item active">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="wishlist.html" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    Wishlist
+                </a>
+                <a href="trip-planning.html" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Trip Planning
+                </a>
+                <a href="#" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                    </svg>
+                    Itinerary
+                </a>
+                <a href="#" class="sidebar-item">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    Booking
+                </a>
+            </aside>
+
+            <!-- Dashboard Section -->
+            <section class="dashboard-section">
+                <h1 class="dashboard-title">Dashboard</h1>
+                <p class="dashboard-subtitle">Your travel overview and insights</p>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Total Trips</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Wishlist Items</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">₹45,000</div>
+                        <div class="stat-label">Total Spent</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.8</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Cards -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Past Trips</h3>
+                            <div class="card-icon" style="background: #28a745;">✈️</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="past-trip-item">
+                                <div class="past-trip-header">
+                                    <h4>Goa Beach Vacation</h4>
+                                    <div class="trip-rating">
+                                        ⭐⭐⭐⭐⭐
+                                    </div>
+                                </div>
+                                <p><strong>Date:</strong> December 15-22, 2023</p>
+                                <p><strong>Destination:</strong> Goa, India</p>
+                                <p><strong>Duration:</strong> 7 Days</p>
+                                <p><strong>Cost:</strong> ₹35,000</p>
+                                <p style="margin-top: 12px; color: #28a745; font-weight: 500;">View Details →</p>
+                            </div>
+                            <div class="past-trip-item">
+                                <div class="past-trip-header">
+                                    <h4>Mumbai Business Trip</h4>
+                                    <div class="trip-rating">
+                                        ⭐⭐⭐⭐
+                                    </div>
+                                </div>
+                                <p><strong>Date:</strong> November 10-12, 2023</p>
+                                <p><strong>Destination:</strong> Mumbai, India</p>
+                                <p><strong>Duration:</strong> 3 Days</p>
+                                <p><strong>Cost:</strong> ₹12,000</p>
+                                <p style="margin-top: 12px; color: #28a745; font-weight: 500;">View Details →</p>
+                            </div>
+                            <div class="past-trip-item">
+                                <div class="past-trip-header">
+                                    <h4>Delhi Family Visit</h4>
+                                    <div class="trip-rating">
+                                        ⭐⭐⭐⭐⭐
+                                    </div>
+                                </div>
+                                <p><strong>Date:</strong> October 5-8, 2023</p>
+                                <p><strong>Destination:</strong> Delhi, India</p>
+                                <p><strong>Duration:</strong> 4 Days</p>
+                                <p><strong>Cost:</strong> ₹18,000</p>
+                                <p style="margin-top: 12px; color: #28a745; font-weight: 500;">View Details →</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Trip Planning</h3>
+                            <div class="card-icon" style="background: #00b28a;">🗺️</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="planning-item">
+                                <div class="planning-header">
+                                    <h4>Europe Summer Trip</h4>
+                                    <span class="planning-status in-progress">In Progress</span>
+                                </div>
+                                <p><strong>Destination:</strong> Paris, Rome, Barcelona</p>
+                                <p><strong>Duration:</strong> 14 Days</p>
+                                <p><strong>Progress:</strong> 60% Complete</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                                <p style="margin-top: 12px; color: #00b28a; font-weight: 500;">Continue Planning →</p>
+                            </div>
+                            <div class="planning-item">
+                                <div class="planning-header">
+                                    <h4>Kerala Backwaters</h4>
+                                    <span class="planning-status draft">Draft</span>
+                                </div>
+                                <p><strong>Destination:</strong> Alleppey, Kerala</p>
+                                <p><strong>Duration:</strong> 5 Days</p>
+                                <p><strong>Progress:</strong> 25% Complete</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25%"></div>
+                                </div>
+                                <p style="margin-top: 12px; color: #00b28a; font-weight: 500;">Continue Planning →</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">AI Recommendations</h3>
+                            <div class="card-icon" style="background: #667eea;">🤖</div>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Based on your travel history, we recommend:</strong></p>
+                            <ul style="margin: 12px 0; padding-left: 20px;">
+                                <li>Exploring the beaches of Andaman & Nicobar Islands</li>
+                                <li>Cultural tour of Rajasthan's heritage sites</li>
+                                <li>Adventure activities in Manali, Himachal Pradesh</li>
+                                <li>Wildlife safari in Ranthambore National Park</li>
+                            </ul>
+                            <p style="margin-top: 12px; color: #667eea; font-weight: 500;">See More Recommendations →</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Quick Actions</h3>
+                            <div class="card-icon" style="background: #ff6b6b;">⚡</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="quick-actions">
+                                <button class="btn-secondary">Book New Flight</button>
+                                <button class="btn-secondary">Search Hotels</button>
+                                <button class="btn-secondary">Plan Trip</button>
+                                <button class="btn-secondary">View Offers</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Add click handlers for navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                if (this.classList.contains('myspace')) {
+                    // Already on MySpace page
+                    return;
+                }
+                
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+
+        // Add hover effects for dashboard cards
+        document.querySelectorAll('.dashboard-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script>
+</body>
+</html>
