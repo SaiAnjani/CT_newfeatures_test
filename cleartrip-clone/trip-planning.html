@@ -286,6 +286,104 @@
             color: #1A1A1A;
         }
 
+        /* Search and Filter Styles */
+        .search-filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #E6E6E6;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #FF4F17;
+        }
+
+        .search-btn {
+            background: #FF4F17;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-btn:hover {
+            background: #e64515;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #E6E6E6;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-select:focus {
+            border-color: #FF4F17;
+        }
+
+        .clear-btn {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #E6E6E6;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .clear-btn:hover {
+            background: #e9ecef;
+            color: #1A1A1A;
+        }
+
+        /* Status styles */
+        .status-on-time {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .status-delayed {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .status-cancelled {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
         /* Right Chatbot Area */
         .right-chatbot {
             width: 400px;
@@ -592,64 +690,39 @@
 
                 <!-- Flights Tab -->
                 <div id="flights" class="tab-content active">
+                    <!-- Flight Search and Filter Section -->
+                    <div class="search-filter-section">
+                        <div class="search-box">
+                            <input type="text" id="flight-search" placeholder="Search flights by airline, route, or flight number..." class="search-input">
+                            <button onclick="searchFlightsFromInput()" class="search-btn">Search</button>
+                        </div>
+                        <div class="filter-options">
+                            <select id="origin-filter" class="filter-select" onchange="applyFilters()">
+                                <option value="">All Origins</option>
+                                <option value="BLR">Bangalore</option>
+                                <option value="BOM">Mumbai</option>
+                                <option value="DEL">Delhi</option>
+                                <option value="HYD">Hyderabad</option>
+                            </select>
+                            <select id="destination-filter" class="filter-select" onchange="applyFilters()">
+                                <option value="">All Destinations</option>
+                                <option value="BLR">Bangalore</option>
+                                <option value="BOM">Mumbai</option>
+                                <option value="DEL">Delhi</option>
+                                <option value="HYD">Hyderabad</option>
+                            </select>
+                            <select id="airline-filter" class="filter-select" onchange="applyFilters()">
+                                <option value="">All Airlines</option>
+                                <option value="IndiGo">IndiGo</option>
+                                <option value="SpiceJet">SpiceJet</option>
+                                <option value="Air India">Air India</option>
+                            </select>
+                            <button onclick="clearFilters()" class="clear-btn">Clear Filters</button>
+                        </div>
+                    </div>
+                    
                     <div class="results-grid">
-                        <div class="result-card">
-                            <div class="card-header">
-                                <div class="card-title">Mumbai → Goa</div>
-                                <div class="card-price">₹4,500</div>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <div class="detail-label">Airline</div>
-                                    <div class="detail-value">IndiGo</div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Duration</div>
-                                    <div class="detail-value">1h 15m</div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Departure</div>
-                                    <div class="detail-value">08:30 AM</div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Arrival</div>
-                                    <div class="detail-value">09:45 AM</div>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-primary">Book Now</button>
-                                <button class="btn-secondary">View Details</button>
-                            </div>
-                        </div>
-
-                        <div class="result-card">
-                            <div class="card-header">
-                                <div class="card-title">Delhi → Mumbai</div>
-                                <div class="card-price">₹6,200</div>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <div class="detail-label">Airline</div>
-                                    <div class="detail-value">Air India</div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Duration</div>
-                                    <div class="detail-value">2h 10m</div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Departure</div>
-                                    <div class="detail-value">10:15 AM</div>
-                                </div>
-                                <div class="detail-item">
-                                    <div class="detail-label">Arrival</div>
-                                    <div class="detail-value">12:25 PM</div>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-primary">Book Now</button>
-                                <button class="btn-secondary">View Details</button>
-                            </div>
-                        </div>
+                        <!-- Flight cards will be dynamically loaded here -->
                     </div>
                 </div>
 
@@ -869,6 +942,146 @@
                 this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
             });
         });
+    </script>
+    
+    <!-- Include flights API -->
+    <script src="js/flights-api.js"></script>
+    
+    <script>
+        // Wait for flights API to load before initializing
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize flights after a short delay to ensure flights-api.js is loaded
+            setTimeout(() => {
+                if (window.flightsAPIModule) {
+                    window.flightsAPIModule.loadFlightsFromAPI();
+                } else {
+                    console.error('Flights API module not loaded');
+                }
+            }, 100);
+        });
+        // Additional functions for flight search and filtering
+        async function searchFlightsFromInput() {
+            const searchQuery = document.getElementById('flight-search').value;
+            console.log('Searching for:', searchQuery);
+            
+            if (!searchQuery.trim()) {
+                // If search is empty, reload all flights
+                await window.flightsAPIModule.loadFlightsFromAPI();
+                return;
+            }
+            
+            const filteredFlights = await window.flightsAPIModule.searchFlightsAPI({ query: searchQuery });
+            console.log('Search results:', filteredFlights.length, 'flights');
+            displayFilteredFlights(filteredFlights);
+        }
+
+        async function applyFilters() {
+            const origin = document.getElementById('origin-filter').value;
+            const destination = document.getElementById('destination-filter').value;
+            const airline = document.getElementById('airline-filter').value;
+            
+            console.log('Applying filters:', { origin, destination, airline });
+            
+            const params = {};
+            if (origin) params.origin = origin;
+            if (destination) params.destination = destination;
+            if (airline) params.airline = airline;
+            
+            // If no filters are applied, reload all flights
+            if (Object.keys(params).length === 0) {
+                await window.flightsAPIModule.loadFlightsFromAPI();
+                return;
+            }
+            
+            const filteredFlights = await window.flightsAPIModule.searchFlightsAPI(params);
+            console.log('Filter results:', filteredFlights.length, 'flights');
+            displayFilteredFlights(filteredFlights);
+        }
+
+        async function clearFilters() {
+            console.log('Clearing all filters');
+            document.getElementById('origin-filter').value = '';
+            document.getElementById('destination-filter').value = '';
+            document.getElementById('airline-filter').value = '';
+            document.getElementById('flight-search').value = '';
+            
+            // Reload all flights
+            await window.flightsAPIModule.loadFlightsFromAPI();
+        }
+
+        function displayFilteredFlights(flights) {
+            console.log('Displaying filtered flights:', flights.length);
+            const flightsContainer = document.getElementById('flights');
+            if (!flightsContainer) {
+                console.error('Flights container not found');
+                return;
+            }
+            
+            const resultsGrid = flightsContainer.querySelector('.results-grid');
+            if (!resultsGrid) {
+                console.error('Results grid not found');
+                return;
+            }
+            
+            // Clear existing content
+            resultsGrid.innerHTML = '';
+            
+            if (flights.length === 0) {
+                resultsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <h3>No flights found</h3>
+                        <p>Try adjusting your search criteria or filters.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Add flight cards
+            flights.forEach((flight, index) => {
+                console.log(`Creating filtered flight card ${index + 1}:`, flight.FlightNumber);
+                const flightCard = window.createFlightCard(flight);
+                resultsGrid.appendChild(flightCard);
+            });
+            
+            console.log('Filtered flight cards created:', resultsGrid.children.length);
+        }
+
+        // Add event listener for search input
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('flight-search');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchFlightsFromInput();
+                    }
+                });
+            }
+        });
+
+        // Debug function to test filters
+        window.testFilters = async function() {
+            console.log('=== TESTING FILTERS ===');
+            
+            // Test search
+            console.log('Testing search for "indigo"...');
+            const searchResults = await window.flightsAPIModule.searchFlightsAPI({ query: 'indigo' });
+            console.log('Search results:', searchResults.length, 'flights');
+            
+            // Test origin filter
+            console.log('Testing origin filter for "BLR"...');
+            const originResults = await window.flightsAPIModule.searchFlightsAPI({ origin: 'BLR' });
+            console.log('Origin filter results:', originResults.length, 'flights');
+            
+            // Test airline filter
+            console.log('Testing airline filter for "IndiGo"...');
+            const airlineResults = await window.flightsAPIModule.searchFlightsAPI({ airline: 'IndiGo' });
+            console.log('Airline filter results:', airlineResults.length, 'flights');
+            
+            // Test combined filter
+            console.log('Testing combined filter (BLR + IndiGo)...');
+            const combinedResults = await window.flightsAPIModule.searchFlightsAPI({ origin: 'BLR', airline: 'IndiGo' });
+            console.log('Combined filter results:', combinedResults.length, 'flights');
+        };
     </script>
 </body>
 </html>
